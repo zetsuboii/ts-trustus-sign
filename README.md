@@ -1,6 +1,6 @@
 # ts-trustus-sign
 
-Example usage of @ZeframLou's Trustus
+Example usage of @ZeframLou's Trustus <br>
 Uses ethers.js
 
 ## Usage 
