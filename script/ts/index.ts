@@ -14,7 +14,7 @@ const printRemixRepr = (sign: any) => {
 const solidityTimestamp = Math.floor(Date.now() / 1000);
 
 // Config
-const CHAIN_ID = 1;
+const CHAIN_ID = 3;
 const TEST_DEPLOYMENT_ADDR = "0xe96d4fdaa611a2e3fe7643b3e8ca1b5bf7011f0d";
 
 const main = async () => {
@@ -39,7 +39,7 @@ const main = async () => {
   );
 
   // You can uncomment this line to get a representation you can use in Remix
-  // printRemixRepr(signature);
+  printRemixRepr(signature);
   console.log(signature);
 };
 
