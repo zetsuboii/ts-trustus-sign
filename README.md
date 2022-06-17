@@ -7,5 +7,5 @@ Uses ethers.js
 
 This is mostly intended as a reference but if you want to run it:
 - Clone the repo
-- `npm i install`
-- `npx nodemon src/index.ts`
+- `npm i && forge install`
+- `npx nodemon script/ts/index.ts`
