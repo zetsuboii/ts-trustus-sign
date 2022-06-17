@@ -4,7 +4,7 @@ import { Wallet, utils } from "ethers";
  * @description Prepares a EIP-712 compilant signature
  * @param request: bytes32 request string,
  * @param deadline: UNIX second timestamp after which the sign. is invalid
- * @param payload: bytes payload to send
+ * @param payload: bytes payload to send, preferably abi encoded
  * @param verifyingContract: Address of the requesting contract
  */
 const makeTrustusSignature = async (
@@ -62,6 +62,11 @@ const makeTrustusSignature = async (
             ]
           ),
           utils.solidityKeccak256(["string"], ["Trustus"]),
+
+          // Since the contract I use will hash the payload, I thought it might 
+          // make sense the version it differently. If you want to use the 
+          // original contract, change this to 1 and change the part I hash the
+          // payload and replace it with plain `payload`.
           utils.solidityKeccak256(["string"], ["1.1"]),
           chainId,
           verifyingContract,
