@@ -105,7 +105,7 @@ abstract contract Trustus {
           keccak256(
             abi.encode(
               keccak256(
-                "VerifyPacket(bytes32 request,uint256 deadline,bytes payload)"
+                "VerifyPacket(bytes32 request,uint256 deadline,bytes32 payload)"
               ),
               packet.request,
               packet.deadline,

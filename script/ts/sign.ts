@@ -35,7 +35,7 @@ const makeTrustusSignature = async (
         [
           utils.solidityKeccak256(
             ["string"],
-            ["VerifyPacket(bytes32 request,uint256 deadline,bytes payload)"]
+            ["VerifyPacket(bytes32 request,uint256 deadline,bytes32 payload)"]
           ),
           request,
           deadline,
