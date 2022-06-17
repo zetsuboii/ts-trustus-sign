@@ -9,6 +9,6 @@ contract TrustMeScript is Script {
 
   function run() public {
     vm.broadcast(DEPLOYER);
-    new TrustMe();
+    new TrustMe(DEPLOYER);
   }
 }
