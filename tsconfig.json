@@ -6,7 +6,7 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "sourceRoot": "src",
+    "sourceRoot": "scripts/ts",
     "outDir": "dist"
   },
   "lib": ["es2015"]
