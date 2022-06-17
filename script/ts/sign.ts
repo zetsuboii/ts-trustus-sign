@@ -1,9 +1,17 @@
 import { Wallet, utils } from "ethers";
 
+/**
+ * @description Prepares a EIP-712 compilant signature
+ * @param request: bytes32 request string,
+ * @param deadline: UNIX second timestamp after which the sign. is invalid
+ * @param payload: bytes payload to send
+ * @param verifyingContract: Address of the requesting contract
+ */
 const makeTrustusSignature = async (
   request: string,
   deadline: number,
   payload: string,
+  chainId: number,
   verifyingContract: string
 ) => {
   const privKey = process.env?.PRIV_KEY;
@@ -11,6 +19,14 @@ const makeTrustusSignature = async (
     throw new Error("Private key undefined, set in on .env file");
 
   const wallet = new Wallet(privKey);
+  
+  // This part is heavily inspired by @dxganta's work. I know that ethers also
+  // has the `wallet._signTypedData` method but it didn't work out the same way
+  const abiCoder = new utils.AbiCoder();
+
+  // Both in the packet and the domain selector, signature and arguments are
+  // packed and then hashed using keccak256. `bytes` and `string` types are
+  // hashed before packing and other types are left as is. 
   const packetHash = utils.solidityKeccak256(
     ["bytes"],
     [
@@ -23,6 +39,10 @@ const makeTrustusSignature = async (
           ),
           request,
           deadline,
+
+          // In EIP712 standard dynamic types, namely string and bytes, are
+          // hashed using keccak256. This is pointed out by this issue:
+          // https://github.com/ZeframLou/trustus/issues/3
           utils.solidityKeccak256(["bytes"], [payload]),
         ]
       ),
@@ -44,7 +64,7 @@ const makeTrustusSignature = async (
           utils.solidityKeccak256(["string"], ["Trustus"]),
           utils.solidityKeccak256(["string"], ["1.1"]),
           chainId,
-          requestAddress,
+          verifyingContract,
         ]
       ),
     ]
@@ -65,3 +85,5 @@ const makeTrustusSignature = async (
   const { v, r, s } = signingKey.signDigest(messageHashOffChain);
   return { v, r, s, request, deadline, payload };
 };
+
+export { makeTrustusSignature }
